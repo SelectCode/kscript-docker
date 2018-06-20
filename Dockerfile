@@ -8,4 +8,4 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 RUN bash -c "curl -s 'https://get.sdkman.io' | bash"
 
 # install kotlin, maven, gradle
-RUN /bin/bash -c 'source ~/.sdkman/bin/sdkman-init.sh && sdkman_auto_answer=true && sdk install kotlin && sdk install maven && sdk install gradle'
+RUN /bin/bash -c 'source ~/.sdkman/bin/sdkman-init.sh && sdkman_auto_answer=true && sdk install kotlin && sdk install maven && sdk install kscript'
