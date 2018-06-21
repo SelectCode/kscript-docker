@@ -20,4 +20,5 @@ RUN source $SDKMAN_DIR/bin/sdkman-init.sh \
 	&& sdk install java \
 	&& sdk install kotlin \
 	&& sdk install maven \
-	&& sdk install kscript
+	&& sdk install kscript \
+	$$ sdk install gradle
