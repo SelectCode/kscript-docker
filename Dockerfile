@@ -1,11 +1,23 @@
 FROM ubuntu
-RUN  apt-get update && apt-get install -y curl unzip zip wget git default-jdk
 
-# Define commonly used JAVA_HOME variable
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+RUN set -x \
+    && apt-get update \
+    && apt-get install -y curl unzip zip ca-certificates --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
 
-# install sdkman (see http://sdkman.io/install.html)
-RUN bash -c "curl -s 'https://get.sdkman.io' | bash"
+ENV SDKMAN_DIR /usr/local/sdkman
 
-# install kotlin, maven, gradle
-RUN /bin/bash -c 'source ~/.sdkman/bin/sdkman-init.sh && sdkman_auto_answer=true && sdk install kotlin && sdk install maven && sdk install kscript'
+SHELL [ "/bin/bash", "-c" ]
+
+RUN curl 'https://get.sdkman.io' | bash
+
+RUN set -x \
+    && echo "sdkman_auto_answer=true" > $SDKMAN_DIR/etc/config \
+    && echo "sdkman_auto_selfupdate=false" >> $SDKMAN_DIR/etc/config \
+    && echo "sdkman_insecure_ssl=false" >> $SDKMAN_DIR/etc/config
+
+RUN source $SDKMAN_DIR/bin/sdkman-init.sh \
+	&& sdk install java \
+	&& sdk install kotlin \
+	&& sdk install maven \
+	&& sdk install kscript
